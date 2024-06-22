@@ -10,11 +10,9 @@ RUN yarn install
 COPY . ./
 RUN yarn build
 
-#FROM nginx:1.25.1
-#COPY --from=build-env /app/public /usr/share/nginx/html
 
-FROM node:20-alpine
 # FROM gcr.io/distroless/nodejs20-debian11
+FROM node:20-alpine
 COPY --from=build-env /app /app
 WORKDIR /app
 CMD ["node","build"]

@@ -16,8 +16,8 @@
 	if (!squares[i] && !winnerMsg) {
 	  squares[i] = userTurn;
 	  userTurn === Move.PlayerOne
-		? userTurn = Move.PlayerTwo
-		: userTurn = Move.PlayerOne;
+	  ? userTurn = Move.PlayerTwo
+	  : userTurn = Move.PlayerOne;
 	  winnerMsg = winingPositions(squares);
 	  if (winnerMsg)
 		userTurn = Move.PlayerOne;
@@ -49,21 +49,59 @@
 					   : null;
   }
 </script>
-<div>
-  {#if winnerMsg}
-	<h1>{winnerMsg}</h1>
-  {:else}
-	<h1>Next Player : {userTurn !== Move.PlayerOne ? "blue" : "red"}</h1>
-  {/if}
-</div>
-<div class={!!userTurn ? userTurn + ' game' : 'game'}>
-  {#each squares as square, i}
-	<div
-	  class={!!square ? square + ' tile' : 'tile'} on:click={() => handleClick(i)}></div>
-  {/each}
-  <button class="restart" on:click={restart}>Restart Game</button>
-</div>
+<main class="flex flex-col">
+  <div>
+	{#if winnerMsg}
+	  {#if winnerMsg == "It's a draw"}
+		<div class="bg-cyan-600 text-center py-4 lg:px-4 w-3/4 m-auto mt-2 rounded">
+		  <div
+			class="p-2 bg-cyan-600 items-center text-teal-100 leading-none lg:rounded-full flex lg:inline-flex"
+			role="alert">
+			<span class="font-semibold mr-2 text-left flex-auto text-center">{winnerMsg}</span>
+		  </div>
+		</div>
+	  {:else}
+		<div class="bg-teal-500 text-center py-4 lg:px-4 w-3/4 m-auto mt-2 rounded">
+		  <div
+			class="p-2 bg-teal-600 items-center text-teal-100 leading-none lg:rounded-full flex lg:inline-flex"
+			role="alert">
+			<span class="font-semibold mr-2 flex-auto text-center">{winnerMsg}</span>
+		  </div>
+		</div>
+	  {/if}
+	  <div>
 
+	  </div>
+	{:else}
+	  <div
+		class:bg-indigo-400={ userTurn !== Move.PlayerOne }
+		class:bg-rose-400={ userTurn !== Move.PlayerTwo }
+		class="text-center py-4 lg:px-4 w-3/4 m-auto mt-2 rounded">
+		<div
+		  class:bg-indigo-500={ userTurn !== Move.PlayerOne }
+		  class:bg-rose-500={ userTurn !== Move.PlayerTwo }
+		  class="p-2 items-center text-teal-100 leading-none lg:rounded-full flex lg:inline-flex"
+		  role="alert">
+		  <span class="font-semibold mr-2 flex-auto text-center">
+			Next Player : {userTurn !== Move.PlayerOne ? "blue" : "red"}
+		  </span>
+		</div>
+	  </div>
+	{/if}</div>
+
+  <div class="{!!userTurn ? userTurn + ' game' : 'game'} p-8">
+	{#each squares as square, i}
+	  <div
+		class={!!square ? square + ' tile' : 'tile'} on:click={() => handleClick(i)}></div>
+	{/each}
+  </div>
+  <button
+	class="mx-auto bg-transparent
+		hover:bg-blue-500 text-blue-700 font-semibold
+		hover:text-white py-2 px-4 border border-blue-500
+		hover:border-transparent rounded" on:click={restart}>Restart Game
+  </button>
+</main>
 <style>
   :root {
   }
@@ -104,7 +142,7 @@
 
   .tile:nth-child(7),
   .tile:nth-child(8),
-  .tile:nth-child(9){
+  .tile:nth-child(9) {
 	border-bottom: none;
   }
 
@@ -179,11 +217,4 @@
 	padding: 1rem;
   }
 
-  .restart {
-	font-weight: bold;
-	position: absolute;
-	top: 50%;
-	padding: 20px;
-	margin: 200px 500px;
-  }
 </style>
