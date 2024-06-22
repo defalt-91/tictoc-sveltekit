@@ -1,0 +1,9 @@
+services:
+  app:
+    image: svelte-docker:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      pull: false
+    ports:
+      - "3000:3000"
