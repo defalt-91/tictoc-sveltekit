@@ -1,4 +1,4 @@
-FROM node:20 AS build-env
+FROM node:20-alpine AS build-env
 COPY . /app
 WORKDIR /app
 
@@ -17,3 +17,4 @@ COPY --from=build-env /app /app
 WORKDIR /app
 CMD ["node","build"]
 EXPOSE 3000
+
